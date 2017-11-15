@@ -42,10 +42,10 @@ export default class ImageSprite extends PIXI.Sprite{
 
   onDragMove(e){
     if(this.dragFlag && this.dragData != null && this.lastPos){
-      let newPosition = this.dragData.getLocalPosition(this.parent);
-      this.position.x += newPosition.x - this.lastPos.x;
-      this.position.y += newPosition.y - this.lastPos.y;
-      this.lastPos = newPosition;
+      let newPos = this.dragData.getLocalPosition(this.parent);
+      this.position.x += newPos.x - this.lastPos.x;
+      this.position.y += newPos.y - this.lastPos.y;
+      this.lastPos = newPos;
     }
   }
 }

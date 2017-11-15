@@ -11,11 +11,24 @@ class App{
     this.height = window.innerHeight;
     this.container = arg.container;
 
-    this.renderer = PIXI.autoDetectRenderer(this.width, this.height, {
-      backgroundColor : 0xeeee66, antialias: false, transparent: false, resolution: 1
+
+    this.app = new PIXI.Application({
+      autoStart: false,
+      width: this.width,
+      height: this.height,
+      transparent: false, 
+      antialias: false, 
+      resolution: 1, 
+      backgroundColor : 0xeeee66,
+      autoResize: true
     });
-    this.renderer.autoResize = true;
-    this.container.appendChild(this.renderer.view);
+    console.log(this.app);
+
+    this.container.appendChild(this.app.view);
+
+    this.app.ticker.add((delta) => {
+      this.update();
+    });
 
     window.addEventListener('resize', () => {
       this.resize();
@@ -31,38 +44,38 @@ class App{
     /* scene */
     this.scene = new PIXI.Container();
 
-    this.ticker = new PIXI.ticker.Ticker();
-    this.ticker.autoStart = false;
-    this.ticker.add((delta) => {
-      this.update();
-    });
-    this.ticker.start();
-    // console.log(this.ticker);
+    this.app.ticker.start();
+
+    this.app.stage.addChild(this.scene);
   }
 
   update(){
-    this.renderer.render(this.scene);
+    
+
   }
 
   stop(){
+    this.app.ticker.stop();
   }
 
   resize(){
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-    this.renderer.resize(this.width, this.height);
+    this.app.renderer.resize(this.width, this.height);
   }
 
   setImage(imgSrc){
     let imageSprite = new ImageSprite(imgSrc);
     this.scene.addChild(imageSprite);
+    // this.app.stage.addChild(imageSprite);
+
     this.imageSpriteList.push(imageSprite);
   }
 
   onKeydown(e){
     console.log(e.key);
     if(e.key == 1){
-      console.log(this.imageSpriteList[0].width);
+      console.log(this.scene);
     }
   }
 }
