@@ -66,6 +66,8 @@ class App{
 
   setImage(imgSrc){
     let imageSprite = new ImageSprite(imgSrc);
+    imageSprite.x = this.width / 2;
+    imageSprite.y = this.height / 2;
     this.scene.addChild(imageSprite);
     // this.app.stage.addChild(imageSprite);
 
@@ -86,7 +88,7 @@ class App{
   app.start();
 
   /* file input */
-  $("#inputFile").change(function(){
+  $("#input-file").change(function(){
     let file = this.files[0];
     if(!file.type.match(/^image\/(png|jpeg|gif)$/)){
       return;
@@ -101,6 +103,13 @@ class App{
       image.src = e.target.result;
     }
     reader.readAsDataURL(file);
+  });
+
+  /* save image */
+  $(".controller__btn-save").on('click', function(){
+    let canvas = $("#canvas-wrapper > canvas");
+    let imgSrc = canvas.toDataURL("image/jpeg");
+    console.log("save", imgSrc);
   });
 
 })();
