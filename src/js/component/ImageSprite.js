@@ -25,7 +25,11 @@ export default class ImageSprite extends PIXI.Sprite{
   }
 
   onTextureLoaded(){
-    console.log(this, "onTextureUpdate", this.width, this.height, this.x, this.y);
+    console.log(this, 'onTextureUpdate', this.width, this.height, this.x, this.y);
+
+
+    this.x = this.width / 2;
+    this.y = this.height / 2;
   }
 
   onDragStart(e){

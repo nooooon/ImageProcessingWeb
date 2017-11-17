@@ -2,10 +2,11 @@
 'use strict'
 
 import ImageSprite from './component/ImageSprite.js';
+import CaptureCanvas from './util/CaptureCanvas.js';
 
 class App{
   constructor(arg = {}){
-    console.log("App", this, arg);
+    console.log('App', this, arg);
 
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -18,11 +19,11 @@ class App{
       height: this.height,
       transparent: false, 
       antialias: false, 
+      preserveDrawingBuffer: true, 
       resolution: 1, 
       backgroundColor : 0xeeee66,
       autoResize: true
     });
-    console.log(this.app);
 
     this.container.appendChild(this.app.view);
 
@@ -47,6 +48,7 @@ class App{
     this.app.ticker.start();
 
     this.app.stage.addChild(this.scene);
+
   }
 
   update(){
@@ -66,8 +68,6 @@ class App{
 
   setImage(imgSrc){
     let imageSprite = new ImageSprite(imgSrc);
-    imageSprite.x = this.width / 2;
-    imageSprite.y = this.height / 2;
     this.scene.addChild(imageSprite);
     // this.app.stage.addChild(imageSprite);
 
@@ -75,10 +75,14 @@ class App{
   }
 
   onKeydown(e){
-    console.log(e.key);
-    if(e.key == 1){
-      console.log(this.scene);
+    console.log('onKeydown : ' + e.key);
+    if(e.key == 0){
     }
+  }
+
+  save(){
+    const captureCanvas = new CaptureCanvas();
+    captureCanvas.downloadCapture(this.app.view, 'jpeg', 1);
   }
 }
 
@@ -107,9 +111,7 @@ class App{
 
   /* save image */
   $(".controller__btn-save").on('click', function(){
-    let canvas = $("#canvas-wrapper > canvas");
-    let imgSrc = canvas.toDataURL("image/jpeg");
-    console.log("save", imgSrc);
+    app.save();
   });
 
 })();
