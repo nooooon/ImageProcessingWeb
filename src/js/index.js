@@ -17,18 +17,20 @@ class App{
       autoStart: false,
       width: this.width,
       height: this.height,
-      transparent: false, 
+      transparent: true, 
       antialias: false, 
       preserveDrawingBuffer: true, 
       resolution: 1, 
-      backgroundColor : 0xeeee66,
+      // backgroundColor : 0xFFFFFF,
       autoResize: true
     });
 
     this.container.appendChild(this.app.view);
 
     this.app.ticker.add((delta) => {
+      this.stats.begin();
       this.update();
+      this.stats.end();
     });
 
     window.addEventListener('resize', () => {
@@ -37,6 +39,12 @@ class App{
     window.addEventListener('keydown', (e) => {
       this.onKeydown(e)
     });
+
+    this.stats = new Stats();
+    this.stats.domElement.style.position = "fixed";
+    this.stats.domElement.style.right    = "5px";
+    this.stats.domElement.style.top      = "5px";
+    document.body.appendChild(this.stats.domElement);
 
     this.imageSpriteList = [];
   }
@@ -82,7 +90,7 @@ class App{
 
   save(){
     const captureCanvas = new CaptureCanvas();
-    captureCanvas.downloadCapture(this.app.view, 'jpeg', 1);
+    captureCanvas.downloadCapture(this.app.view, 'png');
   }
 }
 
@@ -95,6 +103,7 @@ class App{
   $("#input-file").change(function(){
     let file = this.files[0];
     if(!file.type.match(/^image\/(png|jpeg|gif)$/)){
+      file = null;
       return;
     }
 
