@@ -20,4 +20,18 @@ export default class CaptureCanvas{
     a.setAttribute('download', 'download.' + format);
     a.click()
   }
+
+  downloadCaptureTrim(canvas, x, y, w, h, format = 'jpeg', quality = 1.0){
+    let newCanvas = document.createElement('canvas');
+    let ctx = newCanvas.getContext('2d');
+    let img = new Image();
+    img.src = canvas.toDataURL();
+    img.onload = () => {
+      newCanvas.width = w;
+      newCanvas.height = h;
+      ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
+
+      this.downloadCapture(newCanvas, format, quality);
+    }
+  }
 }

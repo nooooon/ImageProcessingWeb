@@ -1,14 +1,16 @@
 export default class ImageSprite extends PIXI.Sprite{
   
-  constructor(arg, parent){
-    let texture = new PIXI.Texture.fromImage(arg);
-    
+  constructor(src, container, renderer){
+    let texture = new PIXI.Texture.fromImage(src);
     super(texture);
+
     this.texture.baseTexture.on('loaded', () => {this.onTextureLoaded()});
 
     this.anchor.x = this.anchor.y = 0.5;
     this.interactive = true;
-    this.buttonMode = true
+    this.buttonMode = true;
+    this.container = container;
+    this.renderer = renderer;
 
     this
       // events for drag start
@@ -25,11 +27,10 @@ export default class ImageSprite extends PIXI.Sprite{
   }
 
   onTextureLoaded(){
-    console.log(this, 'onTextureUpdate', this.width, this.height, this.x, this.y);
+    this.x = this.renderer.width / 2;
+    this.y = this.renderer.height / 2;
 
-
-    this.x = this.width / 2;
-    this.y = this.height / 2;
+    this.container.addChild(this);
   }
 
   onDragStart(e){

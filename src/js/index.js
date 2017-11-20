@@ -47,6 +47,14 @@ class App{
     document.body.appendChild(this.stats.domElement);
 
     this.imageSpriteList = [];
+
+    /* artboard */
+    this.artboard = new PIXI.Graphics();
+    this.artboard.beginFill(0xFFFFFF);
+    this.artboard.drawRoundedRect(this.width * 0.1, this.height * 0.1, this.width * 0.8, this.height * 0.8, 0);
+    this.artboard.endFill();
+
+    this.app.stage.addChild(this.artboard);
   }
 
   start(){
@@ -56,7 +64,6 @@ class App{
     this.app.ticker.start();
 
     this.app.stage.addChild(this.scene);
-
   }
 
   update(){
@@ -74,10 +81,8 @@ class App{
     this.app.renderer.resize(this.width, this.height);
   }
 
-  setImage(imgSrc){
-    let imageSprite = new ImageSprite(imgSrc);
-    this.scene.addChild(imageSprite);
-    // this.app.stage.addChild(imageSprite);
+  setImage(src){
+    let imageSprite = new ImageSprite(src, this.scene, this.app.renderer);
 
     this.imageSpriteList.push(imageSprite);
   }
@@ -89,8 +94,16 @@ class App{
   }
 
   save(){
+
+    // test
+    this.artboard.alpha = 0;
+    this.app.ticker.update();
+    
     const captureCanvas = new CaptureCanvas();
-    captureCanvas.downloadCapture(this.app.view, 'png');
+    // captureCanvas.downloadCapture(this.app.view, 'png');
+    captureCanvas.downloadCaptureTrim(this.app.view, this.width * 0.1, this.height * 0.1, this.width * 0.8, this.height * 0.8, 'png');
+
+    this.artboard.alpha = 1;
   }
 }
 
