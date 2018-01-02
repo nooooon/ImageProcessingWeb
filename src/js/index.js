@@ -2,6 +2,7 @@
 'use strict'
 
 import ImageSprite from './component/ImageSprite.js';
+import Artboard from './component/Artboard.js';
 import CaptureCanvas from './util/CaptureCanvas.js';
 
 class App{
@@ -47,14 +48,6 @@ class App{
     document.body.appendChild(this.stats.domElement);
 
     this.imageSpriteList = [];
-
-    /* artboard */
-    this.artboard = new PIXI.Graphics();
-    this.artboard.beginFill(0xFFFFFF);
-    this.artboard.drawRoundedRect(this.width * 0.1, this.height * 0.1, this.width * 0.8, this.height * 0.8, 0);
-    this.artboard.endFill();
-
-    this.app.stage.addChild(this.artboard);
   }
 
   start(){
@@ -64,6 +57,11 @@ class App{
     this.app.ticker.start();
 
     this.app.stage.addChild(this.scene);
+
+
+    /* artboard */
+    this.artboard = new Artboard(this.scene, this.app.renderer);
+    this.artboard.setArtboard(500, 400, 0xFFFFFF);
   }
 
   update(){
@@ -79,6 +77,8 @@ class App{
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.app.renderer.resize(this.width, this.height);
+
+    this.artboard.resize();
   }
 
   setImage(src){
@@ -95,15 +95,15 @@ class App{
 
   save(){
 
-    // test
-    this.artboard.alpha = 0;
+    this.artboard.hide();
+
     this.app.ticker.update();
     
     const captureCanvas = new CaptureCanvas();
     // captureCanvas.downloadCapture(this.app.view, 'png');
     captureCanvas.downloadCaptureTrim(this.app.view, this.width * 0.1, this.height * 0.1, this.width * 0.8, this.height * 0.8, 'png');
 
-    this.artboard.alpha = 1;
+    this.artboard.show();
   }
 }
 
