@@ -1,3 +1,5 @@
+import State from '../core/State.js';
+
 export default class ImageSprite extends PIXI.Sprite{
   
   constructor(src, container, renderer){
@@ -34,6 +36,9 @@ export default class ImageSprite extends PIXI.Sprite{
   }
 
   onDragStart(e){
+    if(State.getState() === State.PEN){
+      return;
+    }
     this.dragData = e.data;
     this.dragFlag = true;
     this.lastPos = this.dragData.getLocalPosition(this.parent);

@@ -1,9 +1,11 @@
 /* index.js */
 'use strict'
 
+import State from './core/State.js';
 import ImageSprite from './component/ImageSprite.js';
 import Artboard from './component/Artboard.js';
 import CaptureCanvas from './util/CaptureCanvas.js';
+
 
 class App{
   constructor(arg = {}){
@@ -48,6 +50,10 @@ class App{
     document.body.appendChild(this.stats.domElement);
 
     this.imageSpriteList = [];
+    State.setState(State.HAND);
+
+    $(".debug").text(State.getState().toString());
+
   }
 
   start(){
@@ -101,7 +107,7 @@ class App{
     
     const captureCanvas = new CaptureCanvas();
     // captureCanvas.downloadCapture(this.app.view, 'png');
-    captureCanvas.downloadCaptureTrim(this.app.view, this.width * 0.1, this.height * 0.1, this.width * 0.8, this.height * 0.8, 'png');
+    captureCanvas.downloadCaptureTrim(this.app.view, this.artboard.x, this.artboard.y, this.artboard.width, this.artboard.height, 'png');
 
     this.artboard.show();
   }
@@ -134,6 +140,16 @@ class App{
   /* save image */
   $(".controller__btn-save").on('click', function(){
     app.save();
+  });
+
+  $(".controller__btn-hand").on('click', function(){
+    State.setState(State.HAND);
+    $(".debug").text(State.getState().toString());
+  });
+
+  $(".controller__btn-pen").on('click', function(){
+    State.setState(State.PEN);
+    $(".debug").text(State.getState().toString());
   });
 
 })();
