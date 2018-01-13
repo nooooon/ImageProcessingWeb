@@ -2,6 +2,7 @@
 'use strict'
 
 import State from './core/State.js';
+import DrawTool from './core/DrawTool.js';
 import ImageSprite from './component/ImageSprite.js';
 import Artboard from './component/Artboard.js';
 import CaptureCanvas from './util/CaptureCanvas.js';
@@ -68,6 +69,9 @@ class App{
     /* artboard */
     this.artboard = new Artboard(this.scene, this.app.renderer);
     this.artboard.setArtboard(500, 400, 0xFFFFFF);
+
+    /* drawtool */
+    this.drawtool = new DrawTool(this.scene, this.app.renderer);
   }
 
   update(){
