@@ -1,15 +1,25 @@
 class State{
 
-  constructor() {
+  constructor(){
     this.controllerState = "";
+    this.selectColor = "#000000";
   }
 
-  setState(state) {
+  setState(state){
     this.controllerState = state;
   }
 
-  getState() {
+  getState(){
     return this.controllerState;
+  }
+
+  /* color */
+  setColor(color){
+    this.selectColor = color;
+  }
+
+  getColor(){
+    return this.selectColor;
   }
 }
 

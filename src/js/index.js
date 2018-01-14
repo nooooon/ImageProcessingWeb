@@ -55,6 +55,7 @@ class App{
 
     $(".debug").text(State.getState().toString());
 
+    State.setColor($("#color-selecter").val());
   }
 
   start(){
@@ -154,6 +155,10 @@ class App{
   $(".controller__btn-pen").on('click', function(){
     State.setState(State.PEN);
     $(".debug").text(State.getState().toString());
+  });
+
+  $("#color-selecter").on('change', function(){
+    State.setColor($("#color-selecter").val());
   });
 
 })();

@@ -62,7 +62,7 @@ export default class DrawTool{
     }
 
     let graphics = new PIXI.Graphics();
-    graphics.lineStyle(4, 0x000000, 1);
+    graphics.lineStyle(4, State.getColor().replace(/#/g, '0x'), 1);
     graphics.moveTo(this.points[0].x, this.points[0].y);
 
     let i;
