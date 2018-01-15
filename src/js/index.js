@@ -56,6 +56,7 @@ class App{
     $(".debug").text(State.getState().toString());
 
     State.setColor($("#color-selecter").val());
+    State.setPenSize($("#pen-size").val());
   }
 
   start(){
@@ -158,7 +159,11 @@ class App{
   });
 
   $("#color-selecter").on('change', function(){
-    State.setColor($("#color-selecter").val());
+    State.setColor(this.value);
+  });
+
+  $("#pen-size").on('input', function(){
+    State.setPenSize(this.value);
   });
 
 })();

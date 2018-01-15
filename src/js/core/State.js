@@ -3,6 +3,7 @@ class State{
   constructor(){
     this.controllerState = "";
     this.selectColor = "#000000";
+    this.selectPenSize = 1;
   }
 
   setState(state){
@@ -20,6 +21,15 @@ class State{
 
   getColor(){
     return this.selectColor;
+  }
+
+  /* pen size */
+  setPenSize(size){
+    this.selectPenSize = size;
+  }
+
+  getPenSize(){
+    return this.selectPenSize;
   }
 }
 
