@@ -3,6 +3,7 @@
 
 import State from './core/State.js';
 import DrawTool from './core/DrawTool.js';
+import DrawRect from './core/DrawRect.js';
 import ImageSprite from './component/ImageSprite.js';
 import Artboard from './component/Artboard.js';
 import CaptureCanvas from './util/CaptureCanvas.js';
@@ -73,7 +74,10 @@ class App{
     this.artboard.setArtboard(500, 400, 0xFFFFFF);
 
     /* drawtool */
-    this.drawtool = new DrawTool(this.scene, this.app.renderer);
+    this.drawTool = new DrawTool(this.scene, this.app.renderer);
+
+    /* draw rect */
+    this.drawRect = new DrawRect(this.scene, this.app.renderer);
   }
 
   update(){
@@ -155,6 +159,11 @@ class App{
 
   $(".controller__btn-pen").on('click', function(){
     State.setState(State.PEN);
+    $(".debug").text(State.getState().toString());
+  });
+
+  $(".controller__btn-rect").on('click', function(){
+    State.setState(State.RECT);
     $(".debug").text(State.getState().toString());
   });
 

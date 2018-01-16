@@ -36,5 +36,6 @@ class State{
 let state = new State();
 state.HAND = Symbol("HAND");
 state.PEN = Symbol("PEN");
+state.RECT = Symbol("RECT");
 
 export default state;
