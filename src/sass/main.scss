@@ -22,17 +22,19 @@ canvas{
 /* window-module */
 .window-module{
   background-color: #FFF;
-  height: 150px;
+  box-shadow: 2px 2px 4px #ccc;
+  min-height: 150px;
   left: 0;
   position: absolute;
   top: 0;
-  width: 200px;
+  min-width: 200px;
 
   &__title{
     background-color: #c0c0c0;
     cursor: pointer;
     display: flex;
     height: 22px;
+    padding-left: 3px;
     user-select: text;
     width: 100%;
   }
@@ -51,6 +53,8 @@ canvas{
 
   &__body{
     font-size: 12px;
+    padding: 3px;
     width: 100%;
+    word-wrap: break-word;
   }
 }

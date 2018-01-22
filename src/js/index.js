@@ -6,6 +6,7 @@ import DrawTool from './core/DrawTool.js';
 import DrawRect from './core/DrawRect.js';
 import ImageSprite from './component/ImageSprite.js';
 import Artboard from './component/Artboard.js';
+import UI_Window from './ui/$Window.js';
 import CaptureCanvas from './util/CaptureCanvas.js';
 
 
@@ -78,6 +79,9 @@ class App{
 
     /* draw rect */
     this.drawRect = new DrawRect(this.scene, this.app.renderer);
+
+    /* UI window */
+    this.window = new UI_Window({'title': 'window title', 'text': 'window body'});
   }
 
   update(){
@@ -176,63 +180,5 @@ class App{
   });
 
 
-
-
-  /* window module test */
-  let moveFlag = false;
-  let movePosX = 50;
-  let movePosY = 50;
-  let $windowModule = $(".window-module");
-  $windowModule.css({
-    'left': movePosX,
-    'top': movePosY
-  });
-  $(".window-module .window-module__close")
-    .on('click', (e) => onWindowClose(e));
-
-  function onWindowClose(e){
-    $windowModule.css('display', 'none');
-  }
-
-  $(".window-module > .window-module__title")
-    // events for drag start
-    .on('mousedown', (e) => onDragStart(e))
-    .on('touchstart', (e) => onDragStart(e))
-    // events for drag end
-    .on('mouseup', (e) => onDragEnd(e))
-    .on('mouseupoutside', (e) => onDragEnd(e))
-    .on('touchend', (e) => onDragEnd(e))
-    .on('touchendoutside', (e) => onDragEnd(e));
-    // events for drag move
-    // .on('mousemove', (e) => onDragMove(e))
-    // .on('touchmove', (e) => onDragMove(e));
-
-  function onDragStart(e){
-    let dragData = e.data;
-    movePosX = e.clientX - parseInt($windowModule.css('left'));
-    movePosY = e.clientY - parseInt($windowModule.css('top'));
-    console.log(movePosX, movePosY);
-    moveFlag = true;
-
-    $(window)
-      .on('mousemove', (e) => onDragMove(e))
-      .on('touchmove', (e) => onDragMove(e));
-  }
-
-  function onDragEnd(e){
-    moveFlag = false;
-    $(window)
-      .off('mousemove')
-      .off('touchmove');
-  }
-
-  function onDragMove(e){
-    if(moveFlag){
-      $windowModule.css({
-        'left': e.clientX - movePosX,
-        'top': e.clientY - movePosY
-      });
-    }
-  }
 
 })();
